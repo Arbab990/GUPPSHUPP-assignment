@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 function JSONBox({ children }) {
   return (
@@ -28,7 +28,7 @@ export default function ResultsView({ data }) {
     try {
       const payload = { user_message: query };
       if (personality) payload.personality = personality;
-      const resp = await axios.post("/api/query_with_rag", payload);
+      const resp = await api.post("/api/query_with_rag", payload);
       setResult(resp.data);
     } catch (e) {
       alert("Error: " + (e.response?.data?.error || e.message));
@@ -45,7 +45,7 @@ export default function ResultsView({ data }) {
     if (!yes) return;
 
     try {
-      await axios.post("/api/clear_memories");
+      await api.post("/api/clear_memories");
       alert("All memories cleared. Reloading page...");
       window.location.reload();
     } catch (e) {

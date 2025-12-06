@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 export default function MessageUploader({ onResult }) {
   const [messagesText, setMessagesText] = useState("");
@@ -18,7 +18,7 @@ export default function MessageUploader({ onResult }) {
 
     setLoading(true);
     try {
-      const resp = await axios.post("/api/extract_and_store", { messages: msgs });
+      const resp = await api.post("/api/extract_and_store", { messages: msgs });
       onResult(resp.data);
     } catch (e) {
       const msg = e.response?.data?.error || e.message || "Unknown error";
